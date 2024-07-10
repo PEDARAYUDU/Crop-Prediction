@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart crop Prediction</title>
+    <style>
+        .nav{
+            
+            font-size: 30px;
+
+
+        }
+        .nav_list
+        {   
+            color: rgb(8, 51, 8);
+            margin: 30px;
+        }
+        body{
+            color: rgb(8, 51, 8);
+            background-image: url("https://wallpapercave.com/wp/wp9010426.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        .demo
+        {
+            width:30%;
+            height: 600px;
+            padding-top: 40px;
+            padding-left: 40px;
+            background: rgba(255, 255, 255, 0.64);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.8px);
+            -webkit-backdrop-filter: blur(7.8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: rgb(8, 51, 8);
+        }
+
+        .demo_class
+        {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 100px;
+        }
+        
+        a {
+            text-decoration: none; /* Remove underline */
+            color: inherit;        /* Inherit color from parent */
+            font-family: inherit;  /* Inherit font from parent */
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="nav">
+            <ul style="list-style: none; display: flex;" class="nav_list">
+                <li style="font-variant: small-caps; font-weight: bold;"><a href="{% url 'home' %}" >Smart Crop Prediction</a></li>
+                <div style="display: flex; margin-left: auto;">
+                    <li style="margin-right: 30px;"><a href="{% url 'predictionform' %}" >About</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'predictionform' %}" >Crop Prediction</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'demo' %}" >User Examples</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'chatbot' %}">Chat Bot</a></li>
+                </div>
+            </ul>
+        </div>
+
+        
+    </div>
+
+</body>
+
+</html>

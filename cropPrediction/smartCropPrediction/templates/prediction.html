@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart crop Prediction</title>
+    <style>
+        .nav {
+            color: rgb(8, 51, 8);
+            font-size: 30px;
+        }
+
+        .nav_list {
+            color: rgb(8, 51, 8);
+            margin: 30px;
+        }
+
+        body {
+            background-image: url("https://c.wallhere.com/photos/1f/4a/field_lettuce_cultivation_vegetables-559734.jpg!d");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            color: rgb(8, 51, 8);
+        }
+
+        .form_block {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .form {
+            color: rgb(8, 51, 8);
+            display: flex;
+            justify-content: center;
+            width: 50%;
+            background: rgba(255, 255, 255, 0.64);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.8px);
+            -webkit-backdrop-filter: blur(7.8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom:30px
+        }
+        .form1 {
+            color: rgb(8, 51, 8);
+            display: flex;
+            justify-content: center;
+           
+            background: rgba(255, 255, 255, 0.64);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.8px);
+            -webkit-backdrop-filter: blur(7.8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom:30px
+        }
+
+        input {
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            width: 120%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            background-color: #3CBC8D;
+        }
+
+        .field_title {
+            margin-bottom: 0px;
+        }
+
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: rgb(8, 51, 8);
+        }
+
+        
+        a {
+            text-decoration: none; /* Remove underline */
+            color: inherit;        /* Inherit color from parent */
+            font-family: inherit;  /* Inherit font from parent */
+        }
+        .resultclass
+        {
+            display:flex;
+            justify-content:space-around;
+        }
+        .inline {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="nav">
+            <ul style="list-style: none; display: flex;" class="nav_list">
+                <li style="font-variant: small-caps; font-weight: bold;"><a href="{% url 'home' %}" >Smart Crop Prediction</a></li>
+                <div style="display: flex; margin-left: auto;">
+                    <li style="margin-right: 30px;"><a href="{% url 'predictionform' %}" >About</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'predictionform' %}" >Crop Prediction</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'demo' %}" >User Examples</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'chatbot' %}">Chat Bot</a></li>
+                </div>
+            </ul>
+        </div>
+        <div class="form_block"  id="formid">
+            <div class="form">
+                <form id="soilForm" class="soilForm">
+                    <h1>Enter the Factors</h1>
+                    <h2>Enter the Agro factor</h2>
+                    <h3 class="field_title">Soil pH</h3><input id="pH" placeholder="pH value of soil">
+                    <h3 class="field_title">Nitrogen value</h3><input type="text" id="Nitrogen" placeholder="Nitrogen value of soil">
+                    <h3 class="field_title">phosphorus value</h3><input type="text" id="phosphorus" placeholder="phosphorus value of soil">
+                    <h3 class="field_title">potassium value</h3><input type="text" id="potassium" placeholder="potassium value of soil">
+                    <h2>Enter the Weather conditions</h2>
+                    <h3 class="field_title">Temperature</h3><input type="text" id="Temperature" placeholder="Temperature of the area">
+                    <h3 class="field_title">Rainfall</h3><input type="text" id="Rainfall" placeholder="Rainfall of the area">
+                    <h2>Enter the price</h2>
+                    <h3 class="field_title">Price</h3><input type="text" id="price" placeholder="Price">
+                    <button class="button" type="button" onclick="submitForm()">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div id="resultid" class="form1" style="display:block">
+            <h1>Enter the Factors</h1>
+                <div class="resultclass"  >
+                    <div>
+                        <h2>Enter the Agro factor</h2>
+                        
+                       <h3 class="field_title inline" id="pHr">Soil pH :</h3> <h3 class="field_title inline" id="pHr"></h3><br>
+                        <h3 class="field_title inline">Nitrogen value :</h3><h3 class="field_title inline"></h3><br>
+                        <h3 class="field_title inline">phosphorus value :</h3><h3 class="field_title inline"></h3><br>
+                        <h3 class="field_title inline">potassium value :</h3> <h3 class="field_title inline"></h3>
+                    </div>
+                    <div>
+                        <h2>Enter the Weather conditions</h2>
+                        <h3 class="field_title">Temperature</h3>
+                        <h3 class="field_title">Rainfall</h3>
+                    </div>
+                    <div>
+                        <h2>Enter the price</h2>
+                        <h3 class="field_title">Price</h3>
+                    </div>
+                </div>
+            <h1>Predicted Crop :</h1>
+                <div  class=" "  >
+                    <h2 class="field_title">Crop Name: </h3>
+                </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function submitForm() {
+            console.log("function called");
+            const form = document.getElementById('soilForm');
+            const formData = new FormData(form);
+            console.log("pranay");
+
+            // Convert FormData to a JSON object
+
+            const pH = document.getElementById("pH");
+            const Nitrogen = document.getElementById("Nitrogen");
+            const phosphorus = document.getElementById("phosphorus");
+            const potassium = document.getElementById("potassium");
+            const Temperature = document.getElementById("Temperature");
+            const Rainfall = document.getElementById("Rainfall");
+            const price= document.getElementById("price");
+            console.log(pH);
+            let data={};
+            data["pH"]=pH.value;
+            data["Nitrogen"]=Nitrogen.value;
+            data["phosphorus"]=phosphorus.value;
+            data["potassium"]=potassium.value;
+            data["Temperature"]=Temperature.value;
+            data["Rainfall"]=Rainfall.value;
+            data["price"]=price.value;
+            console.log(data);
+
+            fetch('prediction_factor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'  // Add CSRF token if necessary
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data); //
+                const formdiv = document.getElementById("formid");
+                const resultdiv= document.getElementById("resultid");
+                resultdiv.style.display="block";
+                formdiv.style.display = 'none';
+                document.getElementById("pHr").innerHTML+="  :"+pH.value;
+                
+                
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        }
+    </script>
+</body>
+
+</html>

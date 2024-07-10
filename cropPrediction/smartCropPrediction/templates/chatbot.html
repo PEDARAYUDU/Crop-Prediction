@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Crop Prediction</title>
+    <style>
+        .nav {
+            font-size: 30px;
+        }
+
+        .nav_list {
+            color: rgb(8, 51, 8);
+            margin: 30px;
+        }
+
+        body {
+            color: rgb(8, 51, 8);
+            background-image: url("https://wallpapercave.com/wp/wp9010426.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .demo {
+            width: 30%;
+            height: 600px;
+            padding-top: 40px;
+            padding-left: 40px;
+            background: rgba(255, 255, 255, 0.64);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.8px);
+            -webkit-backdrop-filter: blur(7.8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: rgb(8, 51, 8);
+        }
+
+        .demo_class {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 100px;
+        }
+
+        a {
+            text-decoration: none; /* Remove underline */
+            color: inherit; /* Inherit color from parent */
+            font-family: inherit; /* Inherit font from parent */
+        }
+
+        .container {    
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+            padding-left: 15%;
+            padding-right: 15%;
+            margin-top: 20px;
+        }
+
+        .scroll_bar {
+            background-image: url('https://mcdn.wallpapersafari.com/335/27/32/jt4AoG.jpg');
+            border-radius: 10px;
+            align-content: center;
+            height: 500px; /* Adjust height as needed */
+            width: 100%;
+            background-color: #626470;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column-reverse;
+            margin-top: 5px;
+            padding-top: 20px; /* Add padding at the top */
+            box-sizing: border-box; /* Ensure padding is included in height calculation */
+        }
+
+        .client, .server {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .client {
+            background-color: #41dd7d;
+            align-self: flex-end;
+        }
+
+        .server {
+            background-color: #c4dddd;
+            align-self: flex-start;
+        }
+
+        .message_container {
+            display: flex;
+            width: 100%;
+        }
+
+        .messagebox {
+            font-size:18px;
+            border-radius: 5px;
+            background-color: #d4d6da;
+            flex-grow: 1;
+            padding: 5px;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            max-width: 87%;
+        }
+
+        .enter_button {
+            border-radius: 5px;
+            padding: 5px 10px;
+            width: 13%;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="nav">
+            <ul style="list-style: none; display: flex;" class="nav_list">
+                <li style="font-variant: small-caps; font-weight: bold;"><a href="{% url 'home' %}">Smart Crop Prediction</a></li>
+                <div style="display: flex; margin-left: auto;">
+                    <li style="margin-right: 30px;"><a href="{% url 'predictionform' %}">About</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'predictionform' %}">Crop Prediction</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'demo' %}">User Examples</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'chatbot' %}">Chat Bot</a></li>
+                </div>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div><h2>Welcome to Chat Bot</h2></div>
+        <div class="scroll_bar" id="scroll_bar"></div>
+        <div class="message_container">
+            <textarea id="messagebox" class="messagebox" placeholder="Type your message..."></textarea>
+            <button type="button" class="enter_button" onclick="display_message()">Enter</button>
+        </div>
+    </div>
+
+    <script>
+        function display_message() {
+            let scroll_bar = document.getElementById("scroll_bar");
+            let messageBox = document.getElementById("messagebox");
+
+            let clientNewMessage = document.createElement("div");
+            clientNewMessage.className = "client";
+            clientNewMessage.textContent = messageBox.value;
+            scroll_bar.prepend(clientNewMessage);
+
+            messageBox.value = "";
+
+            let serverNewMessage = document.createElement("div");
+            serverNewMessage.className = "server";
+            serverNewMessage.textContent = "Data from backend will be displayed";
+            scroll_bar.prepend(serverNewMessage);
+
+            scroll_bar.scrollTop = scroll_bar.scrollHeight;
+        }
+    </script>
+</body>
+
+</html>
