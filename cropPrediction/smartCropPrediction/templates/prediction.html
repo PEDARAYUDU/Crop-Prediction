@@ -42,19 +42,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding-bottom:30px
         }
-        .form1 {
-            color: rgb(8, 51, 8);
-            display: flex;
-            justify-content: center;
-           
-            background: rgba(255, 255, 255, 0.64);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(7.8px);
-            -webkit-backdrop-filter: blur(7.8px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom:30px
-        }
+
 
         input {
             font-size: 16px;
@@ -91,11 +79,7 @@
             color: inherit;        /* Inherit color from parent */
             font-family: inherit;  /* Inherit font from parent */
         }
-        .resultclass
-        {
-            display:flex;
-            justify-content:space-around;
-        }
+
         .inline {
             display: inline-block;
         }
@@ -120,46 +104,21 @@
                 <form id="soilForm" class="soilForm">
                     <h1>Enter the Factors</h1>
                     <h2>Enter the Agro factor</h2>
-                    <h3 class="field_title">Soil pH</h3><input id="pH" placeholder="pH value of soil">
-                    <h3 class="field_title">Nitrogen value</h3><input type="text" id="Nitrogen" placeholder="Nitrogen value of soil">
-                    <h3 class="field_title">phosphorus value</h3><input type="text" id="phosphorus" placeholder="phosphorus value of soil">
-                    <h3 class="field_title">potassium value</h3><input type="text" id="potassium" placeholder="potassium value of soil">
+                    <h3 class="field_title">Soil pH</h3><input id="pH" placeholder="pH value of soil" step="0.01" type="number">
+                    <h3 class="field_title">Nitrogen value</h3><input id="Nitrogen" placeholder="Nitrogen value of soil"step="0.01" type="number">
+                    <h3 class="field_title">phosphorus value</h3><input  id="phosphorus" placeholder="phosphorus value of soil" step="0.01" type="number">
+                    <h3 class="field_title">potassium value</h3><input  id="potassium" placeholder="potassium value of soil" step="0.01" type="number">
                     <h2>Enter the Weather conditions</h2>
-                    <h3 class="field_title">Temperature</h3><input type="text" id="Temperature" placeholder="Temperature of the area">
-                    <h3 class="field_title">Rainfall</h3><input type="text" id="Rainfall" placeholder="Rainfall of the area">
+                    <h3 class="field_title">Temperature</h3><input  id="Temperature" placeholder="Temperature of the area" step="0.01" type="number">
+                    <h3 class="field_title">Humidity</h3><input  id="Humidity" placeholder="Humidity of the area" step="0.01" type="number">
+                    <h3 class="field_title">Rainfall</h3><input  id="Rainfall" placeholder="Rainfall of the area" step="0.01" type="number">
                     <h2>Enter the price</h2>
-                    <h3 class="field_title">Price</h3><input type="text" id="price" placeholder="Price">
+                    <h3 class="field_title">Price</h3><input  id="price" placeholder="Price" step="0.01" type="number">
                     <button class="button" type="button" onclick="submitForm()">Submit</button>
                 </form>
             </div>
         </div>
-        <div id="resultid" class="form1" style="display:block">
-            <h1>Enter the Factors</h1>
-                <div class="resultclass"  >
-                    <div>
-                        <h2>Enter the Agro factor</h2>
-                        
-                       <h3 class="field_title inline" id="pHr">Soil pH :</h3> <h3 class="field_title inline" id="pHr"></h3><br>
-                        <h3 class="field_title inline">Nitrogen value :</h3><h3 class="field_title inline"></h3><br>
-                        <h3 class="field_title inline">phosphorus value :</h3><h3 class="field_title inline"></h3><br>
-                        <h3 class="field_title inline">potassium value :</h3> <h3 class="field_title inline"></h3>
-                    </div>
-                    <div>
-                        <h2>Enter the Weather conditions</h2>
-                        <h3 class="field_title">Temperature</h3>
-                        <h3 class="field_title">Rainfall</h3>
-                    </div>
-                    <div>
-                        <h2>Enter the price</h2>
-                        <h3 class="field_title">Price</h3>
-                    </div>
-                </div>
-            <h1>Predicted Crop :</h1>
-                <div  class=" "  >
-                    <h2 class="field_title">Crop Name: </h3>
-                </div>
 
-        </div>
 
     </div>
 
@@ -177,6 +136,7 @@
             const phosphorus = document.getElementById("phosphorus");
             const potassium = document.getElementById("potassium");
             const Temperature = document.getElementById("Temperature");
+            const Humidity = document.getElementById("Humidity");
             const Rainfall = document.getElementById("Rainfall");
             const price= document.getElementById("price");
             console.log(pH);
@@ -186,33 +146,43 @@
             data["phosphorus"]=phosphorus.value;
             data["potassium"]=potassium.value;
             data["Temperature"]=Temperature.value;
+            data["Humidity"]= Humidity.value;
             data["Rainfall"]=Rainfall.value;
             data["price"]=price.value;
             console.log(data);
 
-            fetch('prediction_factor', {
+            fetch('/prediction_crop/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'  // Add CSRF token if necessary
+                    'X-CSRFToken': getCookie('csrftoken')
                 },
                 body: JSON.stringify(data)
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Success:', data); //
-                const formdiv = document.getElementById("formid");
-                const resultdiv= document.getElementById("resultid");
-                resultdiv.style.display="block";
-                formdiv.style.display = 'none';
-                document.getElementById("pHr").innerHTML+="  :"+pH.value;
-                
-                
+                const params = new URLSearchParams(data).toString();
+                window.location.href = `/result/?${params}`;
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
 
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
         }
     </script>
 </body>

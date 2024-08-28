@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart crop Prediction</title>
+    <style>
+        .nav {
+
+            font-size: 30px;
+
+
+        }
+
+        .nav_list {
+            color: rgb(8, 51, 8);
+            margin: 30px;
+        }
+
+        body {
+            color: rgb(8, 51, 8);
+            background-image: url("https://wallpapercave.com/wp/wp9010426.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .demo {
+            width: 30%;
+            height: 600px;
+            padding-top: 40px;
+            padding-left: 40px;
+            background: rgba(255, 255, 255, 0.64);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.8px);
+            -webkit-backdrop-filter: blur(7.8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: rgb(8, 51, 8);
+        }
+
+        .demo_class {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 100px;
+        }
+
+        a {
+            text-decoration: none;
+            /* Remove underline */
+            color: inherit;
+            /* Inherit color from parent */
+            font-family: inherit;
+            /* Inherit font from parent */
+        }
+
+        .resultblock {
+            /* background-color: white; */
+            width: 80%;
+            text-align: center;
+            /* From https://css.glass */
+            background: rgba(255, 255, 255, 0.64);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.8px);
+            -webkit-backdrop-filter: blur(7.8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
+        }
+
+        .factors {
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position:relative" >
+        <div class="nav">
+            <ul style="list-style: none; display: flex;" class="nav_list">
+                <li style="font-variant: small-caps; font-weight: bold;"><a href="{% url 'home' %}">Smart Crop
+                        Prediction</a></li>
+                <div style="display: flex; margin-left: auto;">
+                    <li style="margin-right: 30px;"><a href="{% url 'predictionform' %}">About</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'predictionform' %}">Crop Prediction</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'demo' %}">User Examples</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'chatbot' %}">Chat Bot</a></li>
+                </div>
+            </ul>
+        </div>
+        <div style=" display:flex; flex-direction: column; align-items:center">
+            <div class="resultblock">
+                <div>
+                    <h1>
+                        Features Entered
+                    </h1>
+                    <div class="factors" style="text-align: left;">
+                        <div>
+                            
+                            <h2>Agro Factors:</h2>
+                        
+                            <div style="font-size: 18px;">
+                                <h3 style="display: inline;">Soil pH :</h3>
+                                <span style="font-size: 24px;">{{ pH }} </span>
+                            </div>
+                            
+                            <div style="font-size: 18px;">
+                                <h3 style="display: inline;">Nitrogen Value :</h3>
+                                <span style="font-size: 24px;">{{Nitrogen}}</span>
+                            </div>
+                            
+                            <div style="font-size: 18px;">
+                                <h3 style="display: inline;">Phosphorus Value :</h3>
+                                <span style="font-size: 24px;">{{Phosphorus}}</span>
+                            </div>
+                                                    
+                            <div style="font-size: 18px;">
+                                <h3 style="display: inline;">Potassium Value :</h3>
+                                <span style="font-size: 24px;">{{Potassium}}</span>
+                            </div>
+                        </div>
+                        <div>
+
+                            <h2>Weather Conditions:</h2>
+                        
+                            <div style="font-size: 18px;">
+                                <h3 style="display: inline;">Temperature :</h3>
+                                <span style="font-size: 24px;">{{Temperature}}</span>
+                            </div>
+                            <div style="font-size: 18px;">
+                                <h3 style="display: inline;">Humidity :</h3>
+                                <span style="font-size: 24px;">{{Humidity}}</span>
+                            </div>
+                            <div style="font-size: 18px;">
+                                <h3 style="display: inline;">Rainfall :</h3>
+                                <span style="font-size: 24px;">{{Rainfall}}</span>
+                            </div>
+                        </div>
+                        <div>
+
+                            <h2>Price Expectation:</h2>
+                        
+                            <div style="font-size: 18px;">
+                                <h3 style="display: inline;">Price :</h3>
+                                <span style="font-size: 24px;">{{Price}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <h1>Crop Predicted</h1>
+                    <img src={{ image_url }}
+                        alt="" width="300px" height="300px">
+                    <h1>Crop Name: {{crop_name}}</h1>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>

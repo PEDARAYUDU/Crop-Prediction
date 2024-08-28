@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart crop Prediction</title>
+    <style>
+        .nav{
+            
+            font-size: 30px;
+
+
+        }
+        .nav_list
+        {   
+            color: rgb(8, 51, 8);
+            margin: 30px;
+        }
+        body{
+            color: rgb(8, 51, 8);
+            background-image: url("https://wallpapercave.com/wp/wp9010426.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: rgb(8, 51, 8);
+        }
+
+        .demo_class
+        {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 100px;
+        }
+        
+        a {
+            text-decoration: none; /* Remove underline */
+            color: inherit;        /* Inherit color from parent */
+            font-family: inherit;  /* Inherit font from parent */
+        }
+        .factors {
+            display: flex;
+            justify-content: space-around;
+
+        }
+        .block
+        {
+            width:75%;
+            padding:30px;
+            background: rgba(255, 255, 255, 0.64);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.8px);
+            -webkit-backdrop-filter: blur(7.8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 50px;
+        }
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: rgb(8, 51, 8);
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="nav">
+            <ul style="list-style: none; display: flex;" class="nav_list">
+                <li style="font-variant: small-caps; font-weight: bold;"><a href="{% url 'home' %}" >Smart Crop Prediction</a></li>
+                <div style="display: flex; margin-left: auto;">
+                    <li style="margin-right: 30px;"><a href="{% url 'predictionform' %}" >About</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'predictionform' %}" >Crop Prediction</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'demo' %}" >User Examples</a></li>
+                    <li style="margin-right: 30px;"><a href="{% url 'chatbot' %}">Chat Bot</a></li>
+                </div>
+            </ul>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center ">
+            <div class="block" style="display:block">
+                <h1>Sample- 1: </h1>
+                <div class="factors" style="text-align: left;">
+                    <div>
+                        <h2>Agro Factors:</h2>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Soil pH :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Nitrogen Value :</h3>
+                            <span style="font-size: 28px;">45</span>
+                        </div>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Phosphorus Value :</h3>
+                            <span style="font-size: 28px;">30</span>
+                        </div>
+                                                
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Potassium Value :</h3>
+                            <span style="font-size: 28px;">30</span>
+                        </div>
+                    </div>
+                    <div>
+
+
+                        <h2>Weather Conditions:</h2>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Temperature :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Humidity :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Rainfall :</h3>
+                            <span style="font-size: 28px;">45</span>
+                        </div>
+                        
+                    </div>
+                    <div>
+                        <h2>Price Expectation:</h2>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Price :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="button" type="button" onclick="submitForm(1)">Submit</button>
+                </div>
+
+            </div>
+            <div class="block">
+                <h1>Sample- 2: </h1>
+                <div class="factors" style="text-align: left;">
+                    <div>  
+                        <h2>Agro Factors:</h2>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Soil pH :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Nitrogen Value :</h3>
+                            <span style="font-size: 28px;">45</span>
+                        </div>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Phosphorus Value :</h3>
+                            <span style="font-size: 28px;">30</span>
+                        </div>
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Potassium Value :</h3>
+                            <span style="font-size: 28px;">30</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Weather Conditions:</h2>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Temperature :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Humidity :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Rainfall :</h3>
+                            <span style="font-size: 28px;">45</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Price Expectation:</h2>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Price :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="button" type="button" onclick="submitForm(2)">Submit</button>
+                </div>
+            </div>
+            <div class="block">
+                <h1>Sample- 3: </h1>
+                <div class="factors" style="text-align: left;">
+                    <div>
+                        <h2>Agro Factors:</h2>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Soil pH :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Nitrogen Value :</h3>
+                            <span style="font-size: 28px;">45</span>
+                        </div>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Phosphorus Value :</h3>
+                            <span style="font-size: 28px;">30</span>
+                        </div>
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Potassium Value :</h3>
+                            <span style="font-size: 28px;">30</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Weather Conditions:</h2>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Temperature :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Humidity :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Rainfall :</h3>
+                            <span style="font-size: 28px;">45</span>
+                        </div>
+                    </div>
+                    <div>
+
+                        <h2>Price Expectation:</h2>
+                        
+                        <div style="font-size: 18px;">
+                            <h3 style="display: inline;">Price :</h3>
+                            <span style="font-size: 28px;">6.5</span>
+                        </div>
+                        
+
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="button" type="button" onclick="submitForm(3)">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function submitForm(value) {
+            console.log(value,"value printed");
+            let data={};
+            if (value == 1)
+            {
+                [[90.0,42.0,43.0,20.879744,82.002744,6.502985,202.935536,3599.264532]]
+            data["pH"]=6.502985;
+            data["Nitrogen"]=90.0;
+            data["phosphorus"]=42.0;
+            data["potassium"]=43.0;
+            data["Temperature"]=20.878944;
+            data["Humidity"]=82.002744;
+            data["Rainfall"]=202.935536;
+            data["price"]=3599.264532;
+            console.log(data);
+            }
+            else if (value == 2)
+            {
+                data["pH"]=6.502985;
+            data["Nitrogen"]=90.0;
+            data["phosphorus"]=42.0;
+            data["potassium"]=43.0;
+            data["Temperature"]=20.878944;
+            data["Humidity"]=82.002744;
+            data["Rainfall"]=202.935536;
+            data["price"]=3599.264532;;
+            console.log(data);
+            }
+            else{
+                data["pH"]=6.502985;
+            data["Nitrogen"]=90.0;
+            data["phosphorus"]=42.0;
+            data["potassium"]=43.0;
+            data["Temperature"]=20.878944;
+            data["Humidity"]=82.002744;
+            data["Rainfall"]=202.935536;
+            data["price"]=3599.264532;;
+            console.log(data);
+            }
+
+
+
+
+            fetch('/prediction_crop/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const params = new URLSearchParams(data).toString();
+                window.location.href = `/result/?${params}`;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+
+</html>
