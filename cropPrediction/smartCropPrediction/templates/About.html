@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart crop Prediction</title>
+    <style>
+      .nav {
+
+          font-size: 30px;
+
+
+      }
+
+      .nav_list {
+          color: rgb(8, 51, 8);
+          margin: 30px;
+      }
+
+      body {
+          color: rgb(8, 51, 8);
+          background-image: url("https://wallpapercave.com/wp/wp9010426.jpg");
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+      }
+
+      .button {
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+          background-color: rgb(8, 51, 8);
+      }
+
+
+
+      a {
+          text-decoration: none;
+          /* Remove underline */
+          color: inherit;
+          /* Inherit color from parent */
+          font-family: inherit;
+          /* Inherit font from parent */
+      }
+
+      .demo {
+          width: 80%;
+          /* height: 600px; */
+          padding-top: 40px;
+          padding-left: 40px;
+          padding-right: 40px;
+          {% comment %} background: rgba(255, 255, 255, 0.863); {% endcomment %}
+          background:white;
+          border-radius: 16px;
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(7.8px);
+          -webkit-backdrop-filter: blur(7.8px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          text-align: center;
+      }
+
+      .paragraph {
+          font-size: 20px;
+
+
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <div class="nav">
+        <ul style="list-style: none; display: flex" class="nav_list">
+          <li style="font-variant: small-caps; font-weight: bold">
+            <a href="{% url 'home' %}">Smart Crop Prediction</a>
+          </li>
+          <div style="display: flex; margin-left: auto">
+            <li style="margin-right: 30px">
+              <a href="{% url 'predictionform' %}">About</a>
+            </li>
+            <li style="margin-right: 30px">
+              <a href="{% url 'predictionform' %}">Crop Prediction</a>
+            </li>
+            <li style="margin-right: 30px">
+              <a href="{% url 'demo' %}">User Examples</a>
+            </li>
+            <li style="margin-right: 30px">
+              <a href="{% url 'chatbot' %}">Chat Bot</a>
+            </li>
+          </div>
+        </ul>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center">
+        <div class="demo">
+          <h1>Problem Statement</h1>
+          <p class="paragraph">
+            Farmers frequently face challenges in selecting the most suitable
+            crops for their fields, often depending on advice from peers and
+            government guidelines. However, these decisions typically overlook
+            essential factors such as soil characteristics, pH levels, weather
+            conditions, and market prices, leading to lower yields and
+            profitability. As a result, there's a need for a more data-driven
+            approach that ensures optimal crop selection for both economic gain
+            and environmental health.
+          </p>
+          <h1>Project overview</h1>
+          <p class="paragraph">
+            We are developing a Django-based web application that integrates a
+            machine learning model to predict or suggest the most suitable crop
+            for a farmer's field. This application leverages data on soil
+            characteristics, weather conditions, and market prices to provide
+            tailored crop recommendations, aiming to optimize both profitability
+            and sustainability.
+          </p>
+          <img src="{% static 'images/model_overView.jpg' %}" alt="" />
+          <h1>Data Description</h1>
+
+          <p class="paragraph">
+            The dataset consists of 4,400 rows and 9 features, including values
+            for nitrogen, potassium, phosphorus, temperature, humidity, pH,
+            rainfall, price, and crop name. The dataset is equally distributed
+            across different crops, with 200 rows allocated to each crop.
+          </p>
+          <img src="{% static 'images/data_set.jpg' %}" alt="" />
+          <h1>Model Building</h1>
+
+          <img src="{% static 'images/model_pipeline.jpg' %}" alt="" />
+          <p class="paragraph">
+            Using the machine learning pipeline illustrated in the image, we
+            implemented various classification algorithms to predict the most
+            suitable crop based on the dataset features. The algorithms employed
+            include Decision Tree (DT), Random Forest Classifier (RFC), Support
+            Vector Machine (SVM), Naive Bayes (NB), XGBoost, and Logistic
+            Regression. Each algorithm was trained, validated, and evaluated
+            within this pipeline to determine the best model for accurate and
+            reliable crop classification, ensuring the final model serves
+            farmers' needs effectively.
+          </p>
+          <img src="{% static 'images/votingsystem.jpg' %}" alt="" width="600px" height="500px" />
+          <h1>Performance and Evaluation</h1>
+          <p class="paragraph">
+            The bar plot illustrates the accuracy of different machine learning
+            models used for crop classification. The Random Forest model
+            achieved the highest accuracy at 98.75%, closely followed by XGBoost
+            at 98.41% and SVM at 98.18%. The Decision Tree model also performed
+            well, with an accuracy of 97.05%. Logistic Regression and Naive
+            Bayes models had lower accuracies, at 91.82% and 89.66%,
+            respectively. This suggests that ensemble methods like Random Forest
+            and XGBoost are particularly effective for this classification task.
+          </p>
+          <img src="{% static 'images/result.jpg' %}" alt="" />
+          <p class="paragraph">
+            The Random Forest model demonstrated outstanding performance in
+            classifying crops based on the given features, achieving 100%
+            accuracy on the test set as indicated by this confusion matrix. This
+            suggests that the model is highly reliable and can be trusted for
+            crop prediction tasks in this context.
+          </p>
+
+          <h1>Conclusion</h1>
+          <p class="paragraph">
+            The Crop Suggestion System (CSS) project successfully leverages
+            advanced machine learning techniques, including Random Forest, SVM,
+            XGBoost, and others, to accurately predict the most suitable crops
+            for farmers based on key features like soil nutrients, weather
+            conditions, and market prices. With a dataset equally distributed
+            among various crops, the Random Forest model achieved near-perfect
+            accuracy, as demonstrated by the confusion matrix, indicating the
+            model's robustness in making precise predictions without
+            misclassification. This project not only empowers farmers with
+            data-driven crop selection but also enhances agricultural
+            productivity and sustainability by integrating environmental factors
+            and economic considerations into decision-making.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

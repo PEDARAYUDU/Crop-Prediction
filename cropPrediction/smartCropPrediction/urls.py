@@ -7,6 +7,7 @@ urlpatterns = [
     path('prediction_crop/', views.prediction_crop, name='prediction_crop'),
     # path("prediction_factor/",views.prediction_factor,name="prediction_factor"),
     path('demo/',views.demo, name='demo'),
+    path('about/',views.about, name="about"),
     path('chatbot/', views.chatbot, name='chatbot'),
     path('result/',views.result,name="resut"),
     

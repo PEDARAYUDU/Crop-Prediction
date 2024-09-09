@@ -18,10 +18,11 @@ model_path2 = os.path.join(settings.BASE_DIR, r'C:\Users\RAMAVATH PEDARAYUDU\min
 with open(model_path2, 'rb') as file:
     sc = pickle.load(file)
     print("Successfully loaded the model")
-model_path3 = os.path.join(settings.BASE_DIR, r'C:\Users\RAMAVATH PEDARAYUDU\miniproject\cropPrediction\smartCropPrediction\model\model.pkl')
+model_path3 = os.path.join(settings.BASE_DIR, r'C:\Users\RAMAVATH PEDARAYUDU\miniproject\cropPrediction\smartCropPrediction\model\modelfinal.pkl')
 with open(model_path3, 'rb') as file:
     model = pickle.load(file)
-    print("Successfully loaded the model")
+    print("Successfully loaded the mode1")
+print(model.predict([[60.000000,55.000000,44.000000,23.004459,82.320763,7.840207,263.964248,3588.772799]]),"final result done")
     
 # dataset=[[118.495093,28.682286,31.477236,23.991854,69.226607,6.334144,175.571323,11902.816946]]
 
@@ -57,6 +58,9 @@ def predict(request):
 
 def demo(request):
     return render(request, "demo.html")
+
+def about(request):
+    return render(request,"About.html")
 
 def chatbot(request):
     return render(request, 'chatbot.html')
@@ -117,6 +121,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 def prediction_crop(request):
+    print("function called ")
     if request.method == 'POST':
         data = json.loads(request.body)
         
@@ -156,14 +161,14 @@ def prediction_crop(request):
 def perform_crop_prediction(pH, nitrogen, phosphorus, potassium, temperature,humidity, rainfall, price):
     print(pH, nitrogen, phosphorus, potassium, temperature,humidity, rainfall, price)
     dataset=[[nitrogen, phosphorus, potassium, temperature,humidity,pH,rainfall, price]]
-
+    # dataset = [[40,50,50,40.0,20,100,100,10000]]
     # dataset=[[90.0,42.0,43.0,20.879744,82.002744,6.502985,202.935536,3599.264532]]
 
-    scaled_features = ms.transform(dataset)
+    # scaled_features = ms.transform(dataset)
 
-    final_features = sc.transform(scaled_features)
+    # final_features = sc.transform(scaled_features)
 
-    prediction = model.predict(final_features)
+    prediction = model.predict(dataset)
     print(prediction)
 
     crop_dict = {1: ["Rice","https://tse3.mm.bing.net/th?id=OIP.M-SZvSkkZR7IcYB57P2JwQHaE8&pid=Api&P=0&h=180"],
