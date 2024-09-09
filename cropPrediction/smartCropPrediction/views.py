@@ -6,6 +6,7 @@ import os
 from django.conf import settings
 from django.shortcuts import render
 from django.shortcuts import render, redirect
+import numpy as np
 
 model=""
 ms=""
@@ -22,6 +23,22 @@ model_path3 = os.path.join(settings.BASE_DIR, r'C:\Users\RAMAVATH PEDARAYUDU\min
 with open(model_path3, 'rb') as file:
     model = pickle.load(file)
     print("Successfully loaded the mode1")
+    
+model_path4 = os.path.join(settings.BASE_DIR, r'C:\Users\RAMAVATH PEDARAYUDU\miniproject\cropPrediction\smartCropPrediction\model\model6.pkl')
+with open(model_path4, 'rb') as file:
+    model_3predict = pickle.load(file)
+    print("Successfully loaded the mode4")
+
+arr = np.array([[60.000000,55.000000,44.000000,23.004459,82.320763,7.840207,263.964248,3588.772799]])
+result = model_3predict.predict(arr)
+top_3_indices = np.argsort(result[0])[-3:]  # Get the indices of the top 3 values
+top_3_indices = top_3_indices[::-1]
+print(top_3_indices)
+print(np.argmax(result[0]),"max crop value __________________!!!!!!!!!!!!!!!!!!")
+print(result,"3 crop prediction ")
+
+# print(top_3_indices,"top 3 crops list ________________________!!!!!!!!!!!!!!!!!!")
+
 print(model.predict([[60.000000,55.000000,44.000000,23.004459,82.320763,7.840207,263.964248,3588.772799]]),"final result done")
     
 # dataset=[[118.495093,28.682286,31.477236,23.991854,69.226607,6.334144,175.571323,11902.816946]]
@@ -66,23 +83,56 @@ def chatbot(request):
     return render(request, 'chatbot.html')
 # , {'prediction': str(prediction[0])}
     
+# def result(request):
+#     context = {
+#         'pH': request.GET.get('pH', ''),
+#         'Nitrogen': request.GET.get('Nitrogen', ''),
+#         'Phosphorus': request.GET.get('Phosphorus', ''),
+#         'Potassium': request.GET.get('Potassium', ''),
+#         'Temperature': request.GET.get('Temperature', ''),
+#         'Humidity': request.GET.get('Humidity',''),
+#         'Rainfall': request.GET.get('Rainfall', ''),
+#         'Price': request.GET.get('Price', ''),
+#         'crops': request.GET.getlist('crops', []),
+        
+#     }
+#     print(context,"result method called !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!____________________________________!!!!!!!!!!!!!")
+#     return render(request, 'result.html', context)
+
 def result(request):
+    # Extracting individual crop names and image URLs from the request
+    crop_names = request.GET.getlist('crops', [])
+    # print(crop_names,"-------------------pranay -----------------------------------------")
+
+    # Building the crops list of dictionaries
+    # (name, image_url)
+    crop_names= crop_names[0].split("pranay")
+    crops = []
+    for i in range(0,len(crop_names),2):
+        crop = {
+            'name': crop_names[i],
+            'image_url': crop_names[i+1]
+        }
+        crops.append(crop)
+    
+
+    # Constructing the full context
     context = {
         'pH': request.GET.get('pH', ''),
         'Nitrogen': request.GET.get('Nitrogen', ''),
         'Phosphorus': request.GET.get('Phosphorus', ''),
         'Potassium': request.GET.get('Potassium', ''),
         'Temperature': request.GET.get('Temperature', ''),
-        'Humidity': request.GET.get('Humidity',''),
+        'Humidity': request.GET.get('Humidity', ''),
         'Rainfall': request.GET.get('Rainfall', ''),
         'Price': request.GET.get('Price', ''),
-        'crop_name': request.GET.get('crop_name', ''),
-        'image_url':request.GET.get('image_url','')
-        
+        'crops': crops,  # List of dictionaries for each crop
     }
-    print(context,"result method called")
-    return render(request, 'result.html', context)
 
+    # Debugging output
+    # print(context, "result method called !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!____________________________________!!!!!!!!!!!!!")
+    
+    return render(request, 'result.html', context)
 
 
 # @csrf_exempt  # Only if you are disabling CSRF protection for this view
@@ -119,6 +169,44 @@ def result(request):
 #         return JsonResponse(response_data, status=400)
 from django.http import JsonResponse
 from django.shortcuts import render
+def prediction_crop2(request):
+    print("function called ")
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        
+        # Extract the factors
+        pH = float(data.get('pH'))  # Use float if the value is a decimal
+        nitrogen = float(data.get('Nitrogen'))
+        phosphorus = float(data.get('phosphorus'))
+        potassium = float(data.get('potassium'))
+        temperature = float(data.get('Temperature'))
+        humidity = float(data.get('Humidity'))
+        rainfall = float(data.get('Rainfall'))
+        price = float(data.get('price'))
+        
+        # Perform prediction logic
+        crop_name = perform_crop_prediction(2,pH, nitrogen, phosphorus, potassium, temperature,humidity, rainfall, price)
+        print(crop_name,"printed the single crop !!!!!!!!!!!!!_____------------------!!!!!!!!")
+        response_data = {
+            'pH': pH,
+            'Nitrogen': nitrogen,
+            'Phosphorus': phosphorus,
+            'Potassium': potassium,
+            'Temperature': temperature,
+            'Humidity':humidity,
+            'Rainfall': rainfall,
+            'Price': price,
+            'crops':[
+                        crop_name[0][0]+"pranay"+ crop_name[0][1]+"pranay"+
+                        crop_name[1][0]+"pranay"+ crop_name[1][1]+"pranay"+
+                        crop_name[2][0]+"pranay"+ crop_name[2][1]
+                ],
+        }
+        
+        print(response_data,"method called")
+        return JsonResponse(response_data)
+    
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 def prediction_crop(request):
     print("function called ")
@@ -136,8 +224,8 @@ def prediction_crop(request):
         price = float(data.get('price'))
         
         # Perform prediction logic
-        crop_name = perform_crop_prediction(pH, nitrogen, phosphorus, potassium, temperature,humidity, rainfall, price)
-        print(crop_name)
+        crop_name = perform_crop_prediction(1,pH, nitrogen, phosphorus, potassium, temperature,humidity, rainfall, price)
+        print(crop_name,"printed the single crop !!!!!!!!!!!!!_____------------------!!!!!!!!")
         response_data = {
             'pH': pH,
             'Nitrogen': nitrogen,
@@ -147,8 +235,9 @@ def prediction_crop(request):
             'Humidity':humidity,
             'Rainfall': rainfall,
             'Price': price,
-            'crop_name': crop_name[0],
-            'image_url': crop_name[1]
+            'crops':[
+                        crop_name[0]+"pranay"+ crop_name[1]
+                ],
         }
         
         print(response_data,"method called")
@@ -158,19 +247,8 @@ def prediction_crop(request):
     
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
-def perform_crop_prediction(pH, nitrogen, phosphorus, potassium, temperature,humidity, rainfall, price):
-    print(pH, nitrogen, phosphorus, potassium, temperature,humidity, rainfall, price)
-    dataset=[[nitrogen, phosphorus, potassium, temperature,humidity,pH,rainfall, price]]
-    # dataset = [[40,50,50,40.0,20,100,100,10000]]
-    # dataset=[[90.0,42.0,43.0,20.879744,82.002744,6.502985,202.935536,3599.264532]]
-
-    # scaled_features = ms.transform(dataset)
-
-    # final_features = sc.transform(scaled_features)
-
-    prediction = model.predict(dataset)
-    print(prediction)
-
+def perform_crop_prediction(flag,pH, nitrogen, phosphorus, potassium, temperature,humidity, rainfall, price):
+    # print(pH, nitrogen, phosphorus, potassium, temperature,humidity, rainfall, price)
     crop_dict = {1: ["Rice","https://tse3.mm.bing.net/th?id=OIP.M-SZvSkkZR7IcYB57P2JwQHaE8&pid=Api&P=0&h=180"],
                  2: ["Maize","https://tse2.mm.bing.net/th?id=OIP.ugm-cFh8OEOeHUoz6PFH9AAAAA&pid=Api&P=0&h=180"],
                  3:["Jute","https://t3.ftcdn.net/jpg/01/91/27/76/360_F_191277640_tdXKlzGlKAI8701Wd0WHQm6ljHAgDGPw.jpg"],
@@ -193,20 +271,34 @@ def perform_crop_prediction(pH, nitrogen, phosphorus, potassium, temperature,hum
                     20:["Kidneybeans","https://t4.ftcdn.net/jpg/04/65/75/43/360_F_465754343_chzIIFu8ys7Bpj8hMbDVSjXTtw7EcLsc.jpg"],
                     21:["Chickpea","https://t3.ftcdn.net/jpg/02/83/97/16/360_F_283971637_l01oKnCdtSDjeSrr0HzsK35wQtx91CNc.jpg"],
                     22:["Coffee","https://media.istockphoto.com/id/1572106495/photo/coffee-beans.webp?b=1&s=170667a&w=0&k=20&c=dD7aobJtywiLWCQrsYC-ikPRhJIUEG5vfg-tCUuABJo="]
-}
-    
-
-    if prediction[0] in crop_dict:
-        crop = crop_dict[prediction[0]]
-        result = "{} is the best crop to be cultivated right there".format(crop)
-    else:
-        result = "Sorry, we could not determine the best crop to be cultivated with the provided data."
+        }
+    dataset=[[nitrogen, phosphorus, potassium, temperature,humidity,pH,rainfall, price]]
+    if flag == 1:
+       
+        prediction = model.predict(dataset)
+        if prediction[0] in crop_dict:
+            crop = crop_dict[prediction[0]]
+            result = "{} is the best crop to be cultivated right there".format(crop)
+        else:
+            result = "Sorry, we could not determine the best crop to be cultivated with the provided data."
         
 
-    # Dummy prediction logic, replace with actual model or logic
-    return crop_dict[prediction[0]]  # Example crop name
-
-
-
-
-# Load the model
+        # Dummy prediction logic, replace with actual model or logic
+        return crop_dict[prediction[0]]  # Example crop name
+    
+    else:
+        # arr = np.array([[60.000000,55.000000,44.000000,23.004459,82.320763,7.840207,263.964248,3588.772799]]) # we need to remove this and add the actual data set values
+        arr = np.array(dataset)
+        result = model_3predict.predict(arr)
+        print(result,"final result order ")
+        top_3_indices = np.argsort(result[0])[-3:]  # Get the indices of the top 3 values
+        top_3_indices = top_3_indices[::-1]
+        print(top_3_indices)
+        
+        print(top_3_indices)
+        lst =[]
+        for ele in top_3_indices:
+            lst.append(crop_dict[ele])
+    
+        return lst
+        

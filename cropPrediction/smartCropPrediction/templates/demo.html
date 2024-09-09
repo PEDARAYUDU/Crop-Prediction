@@ -152,7 +152,8 @@
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <button class="button" type="button" onclick="submitForm(1)">Submit</button>
+                    <button class="button" type="button" onclick="submitForm(1)">Single Crop</button>
+                    <button class="button" type="button" onclick="submitForm2(1)">Multi Crop</button>
                 </div>
 
             </div>
@@ -207,7 +208,8 @@
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <button class="button" type="button" onclick="submitForm(2)">Submit</button>
+                    <button class="button" type="button" onclick="submitForm(2)">Single Crop</button>
+                    <button class="button" type="button" onclick="submitForm2(2)">Multi Crop</button>
                 </div>
             </div>
             <div class="block">
@@ -264,7 +266,8 @@
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <button class="button" type="button" onclick="submitForm(3)">Submit</button>
+                    <button class="button" type="button" onclick="submitForm(3)">Single Crop</button>
+                    <button class="button" type="button" onclick="submitForm2(3)">Multi Crop</button>
                 </div>
             </div>
         </div>
@@ -314,6 +317,70 @@
 
 
             fetch('/prediction_crop/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data,"reached it ");
+
+                const params = new URLSearchParams(data).toString();
+                window.location.href = `/result/?${params}`;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        }
+
+        function submitForm2(value) {
+            console.log(value,"value printed");
+            let data={};
+            if (value == 1)
+            {
+                [[90.0,42.0,43.0,20.879744,82.002744,6.502985,202.935536,3599.264532]]
+            data["pH"]=6.502985;
+            data["Nitrogen"]=90.0;
+            data["phosphorus"]=42.0;
+            data["potassium"]=43.0;
+            data["Temperature"]=20.878944;
+            data["Humidity"]=82.002744;
+            data["Rainfall"]=202.935536;
+            data["price"]=3599.264532;
+            console.log(data);
+            }
+            else if (value == 2)
+            {
+                data["pH"]=6.6;
+            data["Nitrogen"]=70;
+            data["phosphorus"]=47;
+            data["potassium"]=17;
+            data["Temperature"]=24.6;
+            data["Humidity"]=70.4;
+            data["Rainfall"]=104;
+            data["price"]=2020;;
+            console.log(data);
+            }
+            else{
+                data["pH"]=10.96;
+            data["Nitrogen"]=20;
+            data["phosphorus"]=33;
+            data["potassium"]=123;
+            data["Temperature"]=49.27;
+            data["Humidity"]=162.4;
+            data["Rainfall"]=198;
+            data["price"]=22000;;
+            console.log(data);
+            }
+
+
+
+
+            fetch('/prediction_crop2/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

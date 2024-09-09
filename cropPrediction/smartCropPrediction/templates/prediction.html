@@ -61,6 +61,7 @@
         }
 
         .button {
+            
             border: none;
             color: white;
             padding: 15px 32px;
@@ -114,7 +115,8 @@
                     <h3 class="field_title">Rainfall</h3><input  id="Rainfall" placeholder="Rainfall of the area" step="0.01" type="number">
                     <h2>Enter the price</h2>
                     <h3 class="field_title">Price</h3><input  id="price" placeholder="Price" step="0.01" type="number">
-                    <button class="button" type="button" onclick="submitForm()">Submit</button>
+                    <button class="button" type="button" onclick="submitForm()">Single Crop</button>
+                    <button class="button" type="button" onclick="submitForm1()">Multi Crop</button>
                 </form>
             </div>
         </div>
@@ -168,6 +170,68 @@
                 console.error('Error:', error);
             });
 
+        }
+
+        function submitForm1() {
+            console.log("function called");
+            const form = document.getElementById('soilForm');
+            const formData = new FormData(form);
+            console.log("pranay");
+
+            // Convert FormData to a JSON object
+
+            const pH = document.getElementById("pH");
+            const Nitrogen = document.getElementById("Nitrogen");
+            const phosphorus = document.getElementById("phosphorus");
+            const potassium = document.getElementById("potassium");
+            const Temperature = document.getElementById("Temperature");
+            const Humidity = document.getElementById("Humidity");
+            const Rainfall = document.getElementById("Rainfall");
+            const price= document.getElementById("price");
+            console.log(pH);
+            let data={};
+            data["pH"]=pH.value;
+            data["Nitrogen"]=Nitrogen.value;
+            data["phosphorus"]=phosphorus.value;
+            data["potassium"]=potassium.value;
+            data["Temperature"]=Temperature.value;
+            data["Humidity"]= Humidity.value;
+            data["Rainfall"]=Rainfall.value;
+            data["price"]=price.value;
+            console.log(data);
+
+            fetch('/prediction_crop2/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const params = new URLSearchParams(data).toString();
+                window.location.href = `/result/?${params}`;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
         }
 
         function getCookie(name) {
